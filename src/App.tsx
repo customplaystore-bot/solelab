@@ -696,21 +696,45 @@ function App() {
 
       <div className={`cart-overlay ${(isAdminOpen || isPortalOpen || isContactOpen) ? 'open' : ''}`} onClick={() => { setIsAdminOpen(false); setIsPortalOpen(false); setIsContactOpen(false); }} />
       <div className={`cart-drawer glass ${isAdminOpen ? 'open' : ''}`}>
-        <div className="cart-header"><h2>Add Project</h2><button onClick={() => setIsAdminOpen(false)} style={{ background: 'none', border: 'none', color: 'white', fontSize: '24px' }}>×</button></div>
+        <div className="cart-header"><h2>Add New Project</h2><button onClick={() => setIsAdminOpen(false)} style={{ background: 'none', border: 'none', color: 'white', fontSize: '24px' }}>×</button></div>
         <form className="contact-form" onSubmit={handleProjectSubmit} style={{ overflowY: 'auto', flex: 1, paddingRight: '10px' }}>
-          <div className="form-group"><label>Title</label><input className="glass-input" required onChange={e => setNewProject({...newProject, title: e.target.value})} /></div>
-          <FormDropdown label="Type" options={[...new Set(projects.map(p => p.type))].filter(Boolean)} value={newProject.type} onChange={(val: string) => setNewProject({...newProject, type: val})} placeholder="Select or type new..." />
-          <FormDropdown label="Sole" options={[...new Set(projects.map(p => p.sole))].filter(Boolean)} value={newProject.sole} onChange={(val: string) => setNewProject({...newProject, sole: val})} placeholder="Select or type new..." />
-          <FormDropdown label="Brand" options={[...new Set(projects.map(p => p.brand))].filter(Boolean)} value={newProject.brand} onChange={(val: string) => setNewProject({...newProject, brand: val})} placeholder="Select or type new..." />
-          <div className="form-group"><label>Overview</label><textarea className="glass-input" required onChange={e => setNewProject({...newProject, desc: e.target.value})} /></div>
-          <div className="form-group"><label>The Challenge</label><textarea className="glass-input" onChange={e => setNewProject({...newProject, challenge: e.target.value})} /></div>
-          <div className="form-group"><label>The Solution</label><textarea className="glass-input" onChange={e => setNewProject({...newProject, solution: e.target.value})} /></div>
-          <div className="form-group"><label>Key Results</label><textarea className="glass-input" onChange={e => setNewProject({...newProject, results: e.target.value})} /></div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-            <div className="form-group"><label>Before Images</label><input type="file" multiple className="glass-input" onChange={e => setFiles({...files, before: e.target.files})} /></div>
-            <div className="form-group"><label>After Images</label><input type="file" multiple className="glass-input" onChange={e => setFiles({...files, after: e.target.files})} /></div>
+          
+          <div className="form-section" style={{ marginBottom: '30px' }}>
+            <h4 style={{ color: 'var(--primary)', marginBottom: '15px', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Basic Information</h4>
+            <div className="form-group"><label>Project Title</label><input className="glass-input" required placeholder="e.g. Vintage Nike Resole" onChange={e => setNewProject({...newProject, title: e.target.value})} /></div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginTop: '15px' }}>
+              <FormDropdown label="Type" options={[...new Set(projects.map(p => p.type))].filter(Boolean)} value={newProject.type} onChange={(val: string) => setNewProject({...newProject, type: val})} placeholder="Select Type" />
+              <FormDropdown label="Brand" options={[...new Set(projects.map(p => p.brand))].filter(Boolean)} value={newProject.brand} onChange={(val: string) => setNewProject({...newProject, brand: val})} placeholder="Select Brand" />
+            </div>
+            <div style={{ marginTop: '15px' }}>
+              <FormDropdown label="Vibram Sole Used" options={[...new Set(projects.map(p => p.sole))].filter(Boolean)} value={newProject.sole} onChange={(val: string) => setNewProject({...newProject, sole: val})} placeholder="Select Sole" />
+            </div>
           </div>
-          <button type="submit" className="btn-primary" style={{ width: '100%', marginBottom: '40px' }}>Upload Project</button>
+
+          <div className="form-section" style={{ marginBottom: '30px', padding: '20px', background: 'rgba(255,255,255,0.02)', borderRadius: '16px', border: '1px solid var(--glass-border)' }}>
+            <h4 style={{ color: 'var(--primary)', marginBottom: '15px', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Project Story</h4>
+            <div className="form-group"><label>Overview</label><textarea className="glass-input" required placeholder="General description of the project..." onChange={e => setNewProject({...newProject, desc: e.target.value})} /></div>
+            <div className="form-group" style={{ marginTop: '15px' }}><label>The Challenge</label><textarea className="glass-input" style={{ minHeight: '80px' }} placeholder="What was wrong with the shoes?" onChange={e => setNewProject({...newProject, challenge: e.target.value})} /></div>
+            <div className="form-group" style={{ marginTop: '15px' }}><label>The Solution</label><textarea className="glass-input" style={{ minHeight: '80px' }} placeholder="How did you fix it?" onChange={e => setNewProject({...newProject, solution: e.target.value})} /></div>
+            <div className="form-group" style={{ marginTop: '15px' }}><label>Key Results</label><textarea className="glass-input" style={{ minHeight: '80px' }} placeholder="Final outcome and performance..." onChange={e => setNewProject({...newProject, results: e.target.value})} /></div>
+          </div>
+
+          <div className="form-section" style={{ marginBottom: '40px' }}>
+            <h4 style={{ color: 'var(--primary)', marginBottom: '15px', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Media (Photos)</h4>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              <div className="form-group">
+                <label style={{ color: 'var(--accent)' }}>Before Images</label>
+                <input type="file" multiple className="glass-input" style={{ padding: '10px', fontSize: '0.8rem' }} onChange={e => setFiles({...files, before: e.target.files})} />
+              </div>
+              <div className="form-group">
+                <label style={{ color: '#10b981' }}>After Images</label>
+                <input type="file" multiple className="glass-input" style={{ padding: '10px', fontSize: '0.8rem' }} onChange={e => setFiles({...files, after: e.target.files})} />
+              </div>
+            </div>
+            <p style={{ fontSize: '0.7rem', color: '#64748b', marginTop: '10px' }}>Tip: You can select multiple photos at once for each section.</p>
+          </div>
+
+          <button type="submit" className="btn-primary" style={{ width: '100%', marginBottom: '40px', padding: '20px', fontSize: '1.1rem' }}>🚀 Upload Project</button>
         </form>
       </div>
 
