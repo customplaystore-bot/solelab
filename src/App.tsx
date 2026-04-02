@@ -56,7 +56,7 @@ function Header({ onAdmin, onPortal, onContact, scrolled, session, onLogout }: a
     <header className={scrolled ? 'glass scrolled' : ''}>
       <div className="container nav-content" style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', width: '100%' }}>
         <div className="nav-left" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <a href="https://caveman-store.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://caveman-store.com" target="_blank" rel="noopener noreferrer" className="mobile-hide">
             <img src="/logo.png" alt="Logo" style={{ height: '40px', width: 'auto' }} />
           </a>
           {SHOW_WORK_BTN && (

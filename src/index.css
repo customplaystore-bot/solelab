@@ -478,18 +478,43 @@ textarea.glass-input {
   display: none; /* Hidden on desktop */
 }
 
+/* Mobile helper */
+.mobile-hide {
+  display: inline-block;
+}
+
 @media (max-width: 768px) {
+  .mobile-hide {
+    display: none !important;
+  }
+
   .filter-toggle {
     display: inline-block;
   }
   
   .filter-options {
-    display: none !important; /* Force hide by default on mobile */
+    display: none !important;
     grid-template-columns: 1fr !important;
   }
   
   .filter-options.open {
     display: grid !important;
+  }
+
+  .nav-content {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100%;
+  }
+
+  .hero-content h1, .hero-title {
+    font-size: 3rem !important;
+    max-width: 100%;
+    text-align: left;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+    line-height: 1.1;
   }
 }
 
