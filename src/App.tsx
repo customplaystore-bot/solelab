@@ -478,7 +478,7 @@ function Home({ projects }: { projects: Project[] }) {
       <section className="hero">
         <div className="hero-content">
           <span className="badge glass">Sole Customization & Resole</span>
-          <h1>Give the second life <br/> to your shoes by using <br/> VIBRAM soles.</h1>
+          <h1 className="hero-title">Give the second life to your shoes by using VIBRAM soles.</h1>
           {SHOW_WORK_BTN && (
             <button className="btn-primary" onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}>View Projects</button>
           )}

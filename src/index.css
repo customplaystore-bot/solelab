@@ -134,12 +134,16 @@ header.scrolled {
               radial-gradient(circle at bottom left, rgba(212, 241, 246, 0.05), transparent);
 }
 
-.hero-content h1 {
+.hero-content h1, .hero-title {
   font-size: 6rem;
   font-weight: 900;
   margin-bottom: 24px;
-  line-height: 0.9;
+  line-height: 0.95;
   letter-spacing: -4px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  text-wrap: balance;
 }
 
 .hero-content p {
@@ -470,74 +474,166 @@ textarea.glass-input {
 }
 
 @media (max-width: 768px) {
-  .hero-content h1 {
-    font-size: 3rem;
-    letter-spacing: -1px;
-    line-height: 1.1;
-  }
-  
-  .container {
-    padding: 0 20px;
-  }
-  
-  header {
-    height: 70px;
-  }
-  
-  .logo img {
-    height: 35px !important;
+  :root {
+    --container-padding: 20px;
   }
 
-  /* Make drawers full screen on mobile */
-  .cart-drawer {
+  .container {
+    padding: 0 var(--container-padding);
+  }
+
+  /* Hero Section Mobile */
+  .hero {
+    height: auto;
+    padding: 120px 0 60px;
+    text-align: left;
+    display: block;
+  }
+  
+  .hero-content {
+    text-align: left;
+  }
+
+  .hero-content h1 {
+    font-size: 3.2rem;
+    letter-spacing: -1.5px;
+    line-height: 1.0;
+    margin-bottom: 24px;
+  }
+
+  .hero-content p {
+    font-size: 1.1rem;
+    margin-bottom: 32px;
+  }
+
+  /* Header Mobile */
+  header {
+    height: 70px;
+    background: rgba(11, 15, 26, 0.9);
+    backdrop-filter: blur(15px);
+  }
+
+  .nav-content {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto !important;
+    gap: 10px;
+    padding: 0 15px;
+  }
+
+  .logo img {
+    height: 32px !important;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-links {
+    display: flex !important;
+    gap: 6px;
+  }
+
+  /* Button Sizes for Touch */
+  .btn-primary {
     width: 100%;
-    max-width: 100%;
+    padding: 18px;
+    font-size: 1.1rem;
+    border-radius: 16px;
+  }
+
+  .btn-small {
+    padding: 8px 10px;
+    font-size: 0.75rem;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+
+  /* Drawers (Contact/Admin) */
+  .cart-drawer {
+    width: 100% !important;
+    max-width: 100% !important;
     right: 0;
     top: 0;
     height: 100vh;
     border-radius: 0;
-    padding: 20px;
+    padding: 24px;
+    transform: translateY(100%); /* Slide up from bottom */
   }
 
-  /* Adjust grids for single column */
-  .products-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+  .cart-drawer.open {
+    transform: translateY(0);
   }
 
-  .product-card {
-    padding: 20px;
+  .cart-header h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Grid Layouts */
+  .products-section {
+    padding: 60px 0;
   }
 
   .section-title {
-    font-size: 2.2rem;
-    margin-bottom: 30px;
+    font-size: 2.4rem;
+    margin-bottom: 32px;
+    letter-spacing: -1px;
   }
 
-  /* Navigation for mobile */
-  .nav-content {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 15px;
-  }
-  
-  .nav-links {
-    display: flex !important; /* Force show the admin/login buttons */
-    gap: 8px;
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 
-  .btn-small {
-    padding: 8px 12px;
-    font-size: 0.8rem;
+  .product-card {
+    padding: 24px;
+    border-radius: 28px;
   }
 
-  /* Project detail page adjustments */
+  .product-image {
+    aspect-ratio: 1/1; /* Square images look better on mobile list */
+    border-radius: 18px;
+  }
+
+  /* Project Detail Page Mobile */
   .project-detail-grid {
     grid-template-columns: 1fr !important;
-    gap: 30px !important;
+    gap: 32px !important;
+  }
+
+  .project-detail-main h1 {
+    font-size: 2.8rem !important;
+    line-height: 1.1;
+  }
+
+  .badge {
+    padding: 5px 12px;
+    font-size: 0.7rem;
+    margin-bottom: 12px;
+  }
+
+  .before-after-section {
+    padding: 32px 20px !important;
   }
 
   .before-after-section div {
     grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  /* Form spacing for touch */
+  .form-group {
+    gap: 10px;
+  }
+
+  .glass-input {
+    padding: 18px;
+    font-size: 1rem;
+    border-radius: 14px;
+  }
+
+  /* Dropdown mobile height */
+  .dropdown-menu {
+    max-height: 60vh;
   }
 }
