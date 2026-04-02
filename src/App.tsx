@@ -414,7 +414,7 @@ function ProjectDetail({ projects, onUpdate, session }: { projects: Project[], o
                 <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', marginBottom: '16px' }}>
                   <span style={{ fontSize: '0.7rem', color: '#94a3b8' }}>{p.type} • {p.sole} • {p.brand}</span>
                 </div>
-                <Link to={`/project/${p.id}`} className="view-link">View Case Study →</Link>
+                <Link to={`/project/${p.id}`} className="view-link">View project →</Link>
               </div>
             ))}
           </div>
@@ -522,7 +522,7 @@ function Home({ projects }: { projects: Project[] }) {
               <div className="product-image"><img src={getMainImage(p)} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '18px' }} /></div>
               <h3 className="product-name">{p.title}</h3>
               <p style={{ color: '#64748b', fontSize: '0.8rem', marginBottom: '16px' }}>{p.type} • {p.sole} • {p.brand}</p>
-              <Link to={`/project/${p.id}`} className="view-link">View Case Study →</Link>
+              <Link to={`/project/${p.id}`} className="view-link">View project →</Link>
             </div>
           ))}
         </div>
