@@ -473,8 +473,25 @@ textarea.glass-input {
   background: rgba(255, 255, 255, 0.05);
 }
 
+/* Filters Display */
+.filter-toggle {
+  display: none; /* Hidden on desktop */
+}
+
 @media (max-width: 768px) {
-  :root {
+  .filter-toggle {
+    display: inline-block;
+  }
+  
+  .filter-options {
+    display: none !important; /* Force hide by default on mobile */
+    grid-template-columns: 1fr !important;
+  }
+  
+  .filter-options.open {
+    display: grid !important;
+  }
+}
     --container-padding: 20px;
   }
 

@@ -467,6 +467,7 @@ function Home({ projects }: { projects: Project[] }) {
   const [selType, setSelType] = useState<string[]>([])
   const [selSole, setSelSole] = useState<string[]>([])
   const [selBrand, setSelBrand] = useState<string[]>([])
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
   const toggle = (list: string[], set: Function, val: string) => set(list.includes(val) ? list.filter(t => t !== val) : [...list, val])
   const filtered = (projects || []).filter(p => (selType.length === 0 || selType.includes(p.type)) && (selSole.length === 0 || selSole.includes(p.sole)) && (selBrand.length === 0 || selBrand.includes(p.brand)))
   const allTypes = [...new Set((projects || []).map(p => p.type))].filter(Boolean).sort()
@@ -488,11 +489,21 @@ function Home({ projects }: { projects: Project[] }) {
       <section id="work" className="products-section container">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
           <h2 className="section-title" style={{ marginBottom: '0' }}>Selected Works</h2>
-          {(selType.length > 0 || selSole.length > 0 || selBrand.length > 0) && (
-            <button onClick={() => { setSelType([]); setSelSole([]); setSelBrand([]); }} style={{ background: 'rgba(244, 63, 94, 0.1)', border: '1px solid rgba(244, 63, 94, 0.2)', color: 'var(--accent)', padding: '10px 20px', borderRadius: '12px', cursor: 'pointer', fontWeight: 'bold' }}>Clear All Filters</button>
-          )}
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button 
+              className="btn-small glass filter-toggle" 
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+              style={{ borderColor: isFilterOpen ? 'var(--primary)' : 'var(--glass-border)' }}
+            >
+              {isFilterOpen ? 'Hide Filters ↑' : 'Show Filters ↓'}
+            </button>
+            {(selType.length > 0 || selSole.length > 0 || selBrand.length > 0) && (
+              <button onClick={() => { setSelType([]); setSelSole([]); setSelBrand([]); }} style={{ background: 'rgba(244, 63, 94, 0.1)', border: '1px solid rgba(244, 63, 94, 0.2)', color: 'var(--accent)', padding: '10px 20px', borderRadius: '12px', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.8rem' }}>Clear All</button>
+            )}
+          </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginBottom: '60px' }}>
+        
+        <div className={`filter-options ${isFilterOpen ? 'open' : ''}`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginBottom: '60px' }}>
           <div><label style={{ display: 'block', marginBottom: '8px', color: '#64748b', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase' }}>Type</label><TagDropdown tags={allTypes} selected={selType} onToggle={(v: string) => toggle(selType, setSelType, v)} onSelectOnly={(v: string) => setSelType([v])} onClear={() => setSelType([])} /></div>
           <div><label style={{ display: 'block', marginBottom: '8px', color: '#64748b', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase' }}>Sole</label><TagDropdown tags={allSoles} selected={selSole} onToggle={(v: string) => toggle(selSole, setSelSole, v)} onSelectOnly={(v: string) => setSelSole([v])} onClear={() => setSelSole([])} /></div>
           <div><label style={{ display: 'block', marginBottom: '8px', color: '#64748b', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase' }}>Brand</label><TagDropdown tags={allBrands} selected={selBrand} onToggle={(v: string) => toggle(selBrand, setSelBrand, v)} onSelectOnly={(v: string) => setSelBrand([v])} onClear={() => setSelBrand([])} /></div>
