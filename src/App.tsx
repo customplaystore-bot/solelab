@@ -493,9 +493,17 @@ function Home({ projects }: { projects: Project[] }) {
             <button 
               className="btn-small glass filter-toggle" 
               onClick={() => setIsFilterOpen(!isFilterOpen)}
-              style={{ borderColor: isFilterOpen ? 'var(--primary)' : 'var(--glass-border)' }}
+              style={{ 
+                borderColor: isFilterOpen ? 'var(--primary)' : 'var(--glass-border)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
             >
-              {isFilterOpen ? 'Hide Filters ↑' : 'Show Filters ↓'}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+              </svg>
+              <span className="mobile-hide-text">{isFilterOpen ? 'Close' : 'Filter'}</span>
             </button>
             {(selType.length > 0 || selSole.length > 0 || selBrand.length > 0) && (
               <button onClick={() => { setSelType([]); setSelSole([]); setSelBrand([]); }} style={{ background: 'rgba(244, 63, 94, 0.1)', border: '1px solid rgba(244, 63, 94, 0.2)', color: 'var(--accent)', padding: '10px 20px', borderRadius: '12px', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.8rem' }}>Clear All</button>

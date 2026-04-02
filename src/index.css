@@ -475,46 +475,44 @@ textarea.glass-input {
 
 /* Filters Display */
 .filter-toggle {
-  display: none; /* Hidden on desktop */
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
 }
 
-/* Mobile helper */
-.mobile-hide {
-  display: inline-block;
-}
-
-@media (max-width: 768px) {
-  .mobile-hide {
+@media (min-width: 769px) {
+  .filter-toggle {
     display: none !important;
+  }
+}
+
+/* Mobile typography refine */
+@media (max-width: 768px) {
+  .mobile-hide-text {
+    display: none;
   }
 
   .filter-toggle {
-    display: inline-block;
-  }
-  
-  .filter-options {
-    display: none !important;
-    grid-template-columns: 1fr !important;
-  }
-  
-  .filter-options.open {
-    display: grid !important;
+    padding: 10px !important;
   }
 
-  .nav-content {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: 100%;
+  .badge {
+    font-size: 0.7rem;
+    padding: 4px 12px;
+    letter-spacing: 2px;
   }
 
   .hero-content h1, .hero-title {
-    font-size: 3rem !important;
-    max-width: 100%;
-    text-align: left;
-    margin-bottom: 20px;
-    letter-spacing: -1px;
-    line-height: 1.1;
+    font-size: 2.2rem !important; /* Smaller, cleaner font for mobile */
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-top: 10px;
+  }
+
+  .nav-links .btn-small {
+    font-size: 0.7rem;
+    padding: 6px 10px;
   }
 }
 
