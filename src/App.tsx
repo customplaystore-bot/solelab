@@ -616,6 +616,33 @@ function App() {
 
   const handleLogout = () => supabase.auth.signOut()
 
+  const deleteProject = async (p: Project) => {
+    if (!confirm(`Are you sure you want to delete "${p.title}" and all its photos?`)) return
+    
+    try {
+      // 1. Collect all image paths
+      const pathsToDelete = [
+        p.image,
+        ...(p.beforeImages || []),
+        ...(p.afterImages || [])
+      ].filter(path => path && !path.startsWith('http') && path !== '/projects/placeholder.jpg' && path !== 'None')
+
+      // 2. Delete images from Storage
+      if (pathsToDelete.length > 0) {
+        await supabase.storage.from('project-assets').remove(pathsToDelete)
+      }
+
+      // 3. Delete project from Database
+      const { error } = await supabase.from('projects').delete().eq('id', p.id)
+      if (error) throw error
+
+      alert("Project and images deleted successfully.")
+      fetchProjects()
+    } catch (err: any) {
+      alert(`Error deleting project: ${err.message}`)
+    }
+  }
+
   return (
     <Router>
       <Header onAdmin={() => setIsAdminOpen(true)} onPortal={() => setIsPortalOpen(true)} onContact={() => setIsContactOpen(true)} scrolled={scrolled} session={session} onLogout={handleLogout} />
@@ -722,7 +749,7 @@ function App() {
                 <img src={getMainImage(p)} style={{ width: '60px', height: '60px', borderRadius: '12px', objectFit: 'cover' }} />
                 <div style={{ flex: 1 }}><h4>{p.title}</h4></div>
               </Link>
-              <button onClick={async () => { if(confirm("Delete?")) { const { error } = await supabase.from('projects').delete().eq('id', p.id); if (!error) fetchProjects(); } }} style={{ background: 'rgba(244, 63, 94, 0.1)', color: '#f43f5e', padding: '8px 12px', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>Delete</button>
+              <button onClick={() => deleteProject(p)} style={{ background: 'rgba(244, 63, 94, 0.1)', color: '#f43f5e', padding: '8px 12px', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>Delete</button>
             </div>
           ))}
         </div>
