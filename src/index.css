@@ -514,6 +514,10 @@ textarea.glass-input {
     font-size: 0.7rem;
     padding: 6px 10px;
   }
+
+  .center-logo img {
+    height: 24px !important; /* Smaller logo for mobile */
+  }
 }
 
 @media (max-width: 768px) {

@@ -74,7 +74,7 @@ function Header({ onAdmin, onPortal, onContact, scrolled, session, onLogout }: a
           )}
         </div>
 
-        <Link to="/" className="logo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Link to="/" className="logo center-logo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <img src="/sole-lab-logo white.png" alt="Sole Lab" style={{ height: '50px', width: 'auto' }} />
         </Link>
 
