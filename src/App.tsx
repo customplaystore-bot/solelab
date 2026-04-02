@@ -643,6 +643,48 @@ function App() {
     }
   }
 
+  const autoCleanStorage = async () => {
+    if (!confirm("This will scan your storage and permanently delete any images not linked to a project. Continue?")) return
+    
+    try {
+      // 1. Get all files in storage
+      const { data: storageFiles, error: storageError } = await supabase.storage.from('project-assets').list()
+      if (storageError) throw storageError
+      if (!storageFiles) return
+
+      // 2. Get all image paths in database
+      const { data: dbProjects, error: dbError } = await supabase.from('projects').select('image, beforeImages, afterImages')
+      if (dbError) throw dbError
+
+      const usedPaths = new Set<string>()
+      dbProjects.forEach(p => {
+        if (p.image) usedPaths.add(p.image)
+        if (p.beforeImages) p.beforeImages.forEach((img: string) => usedPaths.add(img))
+        if (p.afterImages) p.afterImages.forEach((img: string) => usedPaths.add(img))
+      })
+
+      // 3. Find files in storage NOT in database
+      const filesToDelete = storageFiles
+        .map(f => f.name)
+        .filter(name => !usedPaths.has(name) && name !== '.emptyFolderPlaceholder')
+
+      if (filesToDelete.length === 0) {
+        alert("No unused images found. Everything is clean!")
+        return
+      }
+
+      if (!confirm(`Found ${filesToDelete.length} unused images. Delete them permanently?`)) return
+
+      // 4. Delete unused files
+      const { error: deleteError } = await supabase.storage.from('project-assets').remove(filesToDelete)
+      if (deleteError) throw deleteError
+
+      alert(`Successfully deleted ${filesToDelete.length} unused images.`)
+    } catch (err: any) {
+      alert(`Cleanup error: ${err.message}`)
+    }
+  }
+
   return (
     <Router>
       <Header onAdmin={() => setIsAdminOpen(true)} onPortal={() => setIsPortalOpen(true)} onContact={() => setIsContactOpen(true)} scrolled={scrolled} session={session} onLogout={handleLogout} />
@@ -739,6 +781,26 @@ function App() {
 
       <div className={`cart-drawer glass ${isPortalOpen ? 'open' : ''}`} style={{ maxWidth: '600px' }}>
         <div className="cart-header"><h2>Project Portal</h2><button onClick={() => setIsPortalOpen(false)} style={{ background: 'none', border: 'none', color: 'white' }}>×</button></div>
+        
+        <div style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
+          <button 
+            onClick={autoCleanStorage}
+            style={{ 
+              background: 'rgba(255, 199, 0, 0.1)', 
+              color: 'var(--primary)', 
+              padding: '12px', 
+              borderRadius: '12px', 
+              border: '1px solid var(--glass-border)',
+              cursor: 'pointer',
+              fontSize: '0.8rem',
+              fontWeight: 'bold',
+              flex: 1
+            }}
+          >
+            🧹 Clean Unused Images
+          </button>
+        </div>
+
         <div style={{ padding: '0 0 20px 0' }}><input type="text" className="glass-input" placeholder="Search projects by title..." value={portalSearch} onChange={e => setPortalSearch(e.target.value)} /></div>
         <div className="portal-content" style={{ overflowY: 'auto', flex: 1 }}>
           {(projects || [])
