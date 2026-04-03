@@ -733,7 +733,7 @@ function App() {
 
           <div className="form-section" style={{ marginBottom: '40px' }}>
             <h4 style={{ color: 'var(--primary)', marginBottom: '15px', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Media (Photos)</h4>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div className="form-group">
                 <label style={{ color: 'var(--accent)' }}>Before Images</label>
                 <input type="file" multiple className="glass-input" style={{ padding: '10px', fontSize: '0.8rem' }} onChange={e => setFiles({...files, before: e.target.files})} />
@@ -743,7 +743,7 @@ function App() {
                 <input type="file" multiple className="glass-input" style={{ padding: '10px', fontSize: '0.8rem' }} onChange={e => setFiles({...files, after: e.target.files})} />
               </div>
             </div>
-            <p style={{ fontSize: '0.7rem', color: '#64748b', marginTop: '10px' }}>Tip: You can select multiple photos at once for each section.</p>
+            <p style={{ fontSize: '0.7rem', color: '#64748b', marginTop: '15px' }}>Tip: You can select multiple photos at once for each section.</p>
           </div>
 
           <button type="submit" className="btn-primary" style={{ width: '100%', marginBottom: '40px', padding: '20px', fontSize: '1.1rem' }}>🚀 Upload Project</button>
