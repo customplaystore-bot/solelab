@@ -539,6 +539,7 @@ function App() {
   const [isAdminOpen, setIsAdminOpen] = useState(false)
   const [isPortalOpen, setIsPortalOpen] = useState(false)
   const [isContactOpen, setIsContactOpen] = useState(false)
+  const [isStoryOpen, setIsStoryOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [portalSearch, setPortalSearch] = useState('')
   const [contactService, setContactService] = useState('')
@@ -712,11 +713,22 @@ function App() {
           </div>
 
           <div className="form-section" style={{ marginBottom: '30px', padding: '20px', background: 'rgba(255,255,255,0.02)', borderRadius: '16px', border: '1px solid var(--glass-border)' }}>
-            <h4 style={{ color: 'var(--primary)', marginBottom: '15px', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Project Story</h4>
-            <div className="form-group"><label>Overview</label><textarea className="glass-input" required placeholder="General description of the project..." onChange={e => setNewProject({...newProject, desc: e.target.value})} /></div>
-            <div className="form-group" style={{ marginTop: '15px' }}><label>The Challenge</label><textarea className="glass-input" style={{ minHeight: '80px' }} placeholder="What was wrong with the shoes?" onChange={e => setNewProject({...newProject, challenge: e.target.value})} /></div>
-            <div className="form-group" style={{ marginTop: '15px' }}><label>The Solution</label><textarea className="glass-input" style={{ minHeight: '80px' }} placeholder="How did you fix it?" onChange={e => setNewProject({...newProject, solution: e.target.value})} /></div>
-            <div className="form-group" style={{ marginTop: '15px' }}><label>Key Results</label><textarea className="glass-input" style={{ minHeight: '80px' }} placeholder="Final outcome and performance..." onChange={e => setNewProject({...newProject, results: e.target.value})} /></div>
+            <div 
+              onClick={() => setIsStoryOpen(!isStoryOpen)} 
+              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+            >
+              <h4 style={{ color: 'var(--primary)', margin: 0, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Project Story (Optional)</h4>
+              <span style={{ transform: isStoryOpen ? 'rotate(180deg)' : 'none', transition: '0.3s', color: 'var(--primary)' }}>▼</span>
+            </div>
+            
+            {isStoryOpen && (
+              <div style={{ marginTop: '20px' }}>
+                <div className="form-group"><label>Overview</label><textarea className="glass-input" placeholder="General description of the project..." onChange={e => setNewProject({...newProject, desc: e.target.value})} /></div>
+                <div className="form-group" style={{ marginTop: '15px' }}><label>The Challenge</label><textarea className="glass-input" style={{ minHeight: '80px' }} placeholder="What was wrong with the shoes?" onChange={e => setNewProject({...newProject, challenge: e.target.value})} /></div>
+                <div className="form-group" style={{ marginTop: '15px' }}><label>The Solution</label><textarea className="glass-input" style={{ minHeight: '80px' }} placeholder="How did you fix it?" onChange={e => setNewProject({...newProject, solution: e.target.value})} /></div>
+                <div className="form-group" style={{ marginTop: '15px' }}><label>Key Results</label><textarea className="glass-input" style={{ minHeight: '80px' }} placeholder="Final outcome and performance..." onChange={e => setNewProject({...newProject, results: e.target.value})} /></div>
+              </div>
+            )}
           </div>
 
           <div className="form-section" style={{ marginBottom: '40px' }}>
